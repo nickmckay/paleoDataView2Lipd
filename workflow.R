@@ -1,6 +1,6 @@
-library(lipdR)
-library(tidyverse)
-library(readxl)
+library(lipdR) #remotes::install_github("nickmckay/lipdR")
+library(tidyverse) #install.packages("tidyverse")
+library(readxl) #install.packages("readxl")
 source("convert.R")
 pdvFilePath <- "~/Downloads/PDV/"
 
