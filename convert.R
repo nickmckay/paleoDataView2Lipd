@@ -65,6 +65,9 @@ pdv2lipd <- function(pdvExcel){
   for(m in 1:length(mt)){
     mt[[m]] <- makeColumn(paleo[m])
     mt[[m]]$number <- m
+    if(startsWith(mt[[m]]$variableName,"d1")){
+      mt[[m]]$sensorSpecies <- meta$Value[grepl(meta$Key,pattern = "species",ignore.case = TRUE)]
+    }
   }
   an <- map_chr(mt,"variableName")
 
@@ -81,6 +84,7 @@ pdv2lipd <- function(pdvExcel){
 
   for(m in 1:length(cmt)){
     cmt[[m]] <- makeColumn(chron[m])
+    cmt[[m]]$number <- m
   }
   an <- map_chr(cmt,"variableName")
 
@@ -88,7 +92,7 @@ pdv2lipd <- function(pdvExcel){
 
   L$chronData <- vector(mode = "list",length = 1)
   L$chronData[[1]]$measurementTable <- list()
-  L$chronData[[1]]$measurementTable[[1]] <- mt
+  L$chronData[[1]]$measurementTable[[1]] <- cmt
 
 
 return(L)
@@ -107,7 +111,7 @@ makeColumn <- function(col){
     str_remove_all(pattern = "\\]") %>%
     str_trim()
   }else{
-    variableName <- "longName"
+    variableName <- longName
     units <- "unitless"
   }
 
